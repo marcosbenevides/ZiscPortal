@@ -11,23 +11,57 @@ function login() {
     xhr.open("POST", URL, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             //console.log(JSON.parse(xhr.responseText));
-            objeto = JSON.parse(xhr.responseText)
+            objeto = JSON.parse(xhr.responseText);
             console.log(objeto);
-            var request = $.ajax({
-                type: 'POST',
-                url: 'paginas/status-page.php',
-                data: xhr.responseText,
-                success: function (data, textStatus, jqXHR) {
-                    console.log('success');
+            
+                document.getElementById('linha').innerHTML ="<div class='sessao'>"+
+            "<ul class='nav nav-tabs'>"+ 
+                "<li class='active'>"+
+                    "<a data-toggle='tab' href='#cadastro'>Cadastro</a>"+
+                "</li>"+
+                "<li>"+
+                    "<a data-toggle='tab' href='#alertas'>Histórico de Alertas</a>"+
+                "</li>"+
+            "</ul>"+
+           "<div class='tab-content'>"+
+            "<div id='cadastro' class='tab-pane fade in active'>"+
+                    "<h3><center>Meu Cadastro</center></h3>"+
+                    "<img width='40%' height='30%'  src='assets/imagens/semfoto2.png' alt='' title='Imagem do Usuário' vspace='10%' hspace='15%' border='10%' align='center'/>"+
+                    "<p><label id='nome'>Nome: </label>"+" "+ objeto['nome'] +
+                    "</p>"+
+                    "<p><label id='telefone'>Telefone: </label>"+" "+ objeto['celular'] +
+                    "</p>"+
+                    "<p><label id='email'>E-mail: </label>"+ " "+objeto['email'] +
+                    "</p>"+
+                    "<p><label id='cpf'>CPF: </label>"+ " "+objeto['cpf'] +
+                    "</p>"+
+                "</div>"+
+                "<div id='alertas' class='tab-pane fade'>"+
+                    "<h3>Histórico de Alertas</h3>"+
+                    "<p><label id='email'>Email: </label>" + objeto['email'] + "</p>"+
+                "</div>"+
+            "</div>"+
+        "</div>"
+        
+        //---------------------------------------
+                
+            
+                //var request = $.ajax({
+                //  type: 'POST',
+                //data: {rel: objeto},
+                //url: 'paginas/status-page.php',
+                //success: function (data, textStatus, jqXHR) {
+                //  console.log('success');
+                // $('#linha').load('paginas/status-page.php');
                 }
-            });
-            $('#linha').load('paginas/status-page.php');
+            };
+            //$('#linha').load('paginas/status-page.php');
 
-        }
-    };
+        
+    
 
-    xhr.send("email=" + email + "&password=" + senha);
+    xhr.send("email=" +email + "&password=" +senha);
 
 }

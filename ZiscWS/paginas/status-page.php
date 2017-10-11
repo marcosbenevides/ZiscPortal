@@ -10,20 +10,35 @@
     </head>
     <body>
         <?php
-        
-        var_dump($_POST);
-        
+        //var_dump($_POST);  
         ?>
         <div class="sessao">
             <ul class='nav nav-tabs'> 
                 <li class='active'>
-                    <a data-toggle='tab' href='#cadastro'><?php echo 'Meu Cadastro'; ?></a>
+                    <a data-toggle='tab' href='#inicio'>Início</a>
+                </li>
+                <li>
+                    <a data-toggle ="tab" href="#cadastro">Cadastro</a>
                 </li>
                 <li>
                     <a data-toggle='tab' href='#alertas'>Histórico de Alertas</a>
                 </li>
+                
             </ul>
             <div class='tab-content'>
+                
+                <div id='inicio' class='tab-pane fade in active'>
+                    <h3>Início</h3>
+                    <p><label id="informações">Informações sobre o site: </label> 
+
+                        
+
+                    </p>
+                </div>
+                
+                
+                
+                
                 <div id='cadastro' class='tab-pane fade in active'>
                     <h3>Meu Cadastro</h3>
                     <p><label id="nome">Nome: </label> " + objeto['nome'] + "
