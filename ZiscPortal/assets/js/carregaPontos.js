@@ -79,6 +79,25 @@ function initAutocomplete() {
 	
 	
 	*/
+       
+       
+       /*
+function converteEndereco(endereco, avaliacao) {
+  geocoder.geocode( { 'address': endereco}, function(resultado, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      var marcador = {
+          latitude: resultado[0].geometry.location.k
+        , longitude: resultado[0].geometry.location.D	
+        , titulo: 'Novo marcador'
+        , imagem: avaliacao
+      }
+       criaMarcador(marcador, map)
+    } else {
+      alert('Erro ao converter endereço: ' + status);
+    }
+  });
+}
+        */
 	
 	
 	
@@ -91,8 +110,8 @@ function initAutocomplete() {
                                 [" ", -19.9214331, -43.9534137],
                                 [" ", -19.9328578, -43.9927331],
                                 [" ", -19.9645566, -43.9848184],
-                                [" ", -19.9627172, -43.965093],
-                                [" ", -19.8399493, -43.9534913],
+                              //  [" ", -19.9627172, -43.965093],
+                               // [" ", -19.8399493, -43.9534913],
                                 [" ", -19.8298557, -43.9595337],
                                 [" ", -19.844607, -43.9336853],
                                 [" ", -19.9159934, -43.9179171],
@@ -133,8 +152,10 @@ function initAutocomplete() {
                             var basemovel = [
                                 ['5', -19.9627172, -43.965093],
                                 ['6', -19.8399493, -43.9534913],
-                            ];
-                            var carropm = "assets/imagens/policial.jpg";
+                                [" ", -19.9902532, -44.0161493],
+                                [" ", -20.006727, -44.034802],
+                                [" ", -19.975249, -44.023307]                           ];
+                            var carropm = "assets/imagens/carropm.jpg";
 
                             for (i = 0; i < basemovel.length; i++) {
 								marker = new google.maps.Marker({
