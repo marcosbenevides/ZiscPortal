@@ -24,10 +24,10 @@ function login() {
                 "<li>"+
                     "<a data-toggle='tab' href='#alertas'>Histórico de Alertas</a>"+
                 "</li>"+
-                "<li>"+
-                "<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.php'>DashBoard</a>"+
+				"<li>"+
+					"<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.php'>DashBoard</a>"+
                 "</li>"+
-                    "</ul>"+
+            "</ul>"+
            "<div class='tab-content'>"+
             "<div id='cadastro' class='tab-pane fade in active'>"+
                     "<h3><center>Meu Cadastro</center></h3>"+
