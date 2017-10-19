@@ -12,21 +12,23 @@
     </head>
     <body style="background-color: #eee;">
         <?php
-            function buscaCall() {
-                $server = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $server);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $return = json_decode(curl_exec($ch));
-                curl_close($ch);
-                return $return;
-            }
+
+        function buscaCall() {
+            $server = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $server);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $return = json_decode(curl_exec($ch));
+            curl_close($ch);
+            return $return;
+        }
         ?>
         <div class="container">
+            <div name="msg" id="msg"></div>
             <div class="row align-items-start">
                 <div class="col-md col-lg"> 
                     <div id="map" class="map"></div>   
-                    <input type="text" class="form-control input-lg controls animated fadeIn fixed" id="pac-input" placeholder="Pesquisa">
+                    <input type="text" class="form-control input-lg controls animated fadeIn fixed barra-pesquisa" id="pac-input" placeholder="Pesquisa">
                     <a class="btn btn-primary btn-lg btn-block" href="../index.html">Voltar</button></a>
                 </div>
                 <div class="col-md col-lg-7">
@@ -47,17 +49,17 @@
                                 <?php $calls = buscaCall(); ?>
                                 <?php $i = 0; ?>
                                 <?php foreach ($calls as $call) { ?>
-                                    <tr>
-                                        <th scope="row"><?php echo $i + 1 ?></th>
-                                        <td>
-                                            <font color ="#FF0000">
-                                            <b><?php echo $call->usuario->nome ?></b>
-                                            </font>
-                                        </td>
-                                        <td><?php echo $call->usuario->celular ?></td>
-                                        <td><?php echo $call->usuario->cpf ?></td>
-                                    </tr>
-                                <?php } ?>
+                                        <tr>
+                                            <th scope="row"><?php echo $i + 1 ?></th>
+                                            <td>
+                                                <font color ="#FF0000">
+                                                <b><?php echo $call->usuario->nome ?></b>
+                                                </font>
+                                            </td>
+                                            <td><?php echo $call->usuario->celular ?></td>
+                                            <td><?php echo $call->usuario->cpf ?></td>
+                                        </tr>
+                                    <?php }?>
                             </tbody>
                         </table>
                     </div>
@@ -87,7 +89,25 @@
                 </div>
             </div>
         </div>
-
+        <script>
+            function msg(tipo, texto) {
+                var msg;
+                if (tipo == 'success') {
+                    msg = '<div class="alert alert-success alert-dismissible">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                            '<h4> <i class="icon fa fa-check"> </i>Sucesso!</h4>'
+                            + texto +
+                            '</div>';
+                } else {
+                    msg = '<div class="alert alert-danger alert-dismissible">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                            '<h4><i class="icon fa fa-ban"></i> Erro!</h4>'
+                            + texto +
+                            '</div>';
+                }
+                $('.msg').html(msg);
+            }
+        </script>
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
@@ -100,5 +120,6 @@
         async defer></script>
         <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="../assets/js/carregaPontos.js"></script>
+
     </body>
 </html>
