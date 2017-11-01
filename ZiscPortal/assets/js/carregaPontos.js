@@ -1,14 +1,6 @@
 var base_url = 'http://localhost/ZiscPortal/';
 var map;
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds) {
-            break;
-        }
-    }
-}
 function marcador(position, title, map, icon, info) {
     var marker = new google.maps.Marker({
         position: position,
@@ -53,8 +45,8 @@ function carregarPoliciais() {
         pontospoliciais.forEach(function (policial, index) {
             uluru = {lat: Number(policial.latitude), lng: Number(policial.longitude)};
             var icone = base_url + 'assets/imagens/policial.png';
-            console.log("Chamando o marcador policial");
-            marcador(uluru, policial.nome, map, icone);
+            var infowindow = (policial.nome + ': ' + policial.bairro + ', ' + policial.cidade + '.' + policial.site)
+            marcador(uluru, policial.nome, map, icone, infowindow);
         });
     });
     xhr1.send();
