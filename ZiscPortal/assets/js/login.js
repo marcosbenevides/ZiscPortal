@@ -22,7 +22,7 @@ function login() {
                     "<a data-toggle='tab' href='#cadastro'>Cadastro</a>"+
                 "</li>"+
                 "<li>"+
-                    "<a data-toggle='tab' href='#alertas'>Histórico de Alertas</a>"+
+                    "<a data-toggle='tab' href='#alertas' onclick='minhasAlertas("+objeto.id+")'>Histórico de Alertas</a>"+
                 "</li>"+
 				"<li>"+
 					"<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.php'>DashBoard</a>"+
