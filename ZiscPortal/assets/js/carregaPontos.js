@@ -66,6 +66,11 @@ function minhasAlertas(id) {
     deleteMarkers();
     carregarAlertas(id);
 }
+function todasAlertas(){
+	deleteMarkers();
+	carregarAlertas("todas");
+	carregarPoliciais();
+}
 function carregarPoliciais() {
 
     var pontospoliciais = [];
@@ -88,6 +93,5 @@ function initAutocomplete() {
         zoom: 14,
         mapTypeId: 'roadmap'
     });
-    carregarAlertas("todas");
-    carregarPoliciais();
+    todasAlertas();
 }
