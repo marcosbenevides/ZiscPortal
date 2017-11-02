@@ -17,21 +17,27 @@ function marcador(position, title, map, icon, info) {
         }
     })(marker))
 }
-function carregarAlertas() {
+function carregarAlertas(a) {
     var pontos = [];
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultaalerta/");
     xhr.addEventListener("load", function () {
         pontos = JSON.parse(xhr.responseText);
         pontos.forEach(function (alerta, index) {
-            var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
             if (alerta.ePositivo === true) {
                 var icone = base_url + 'assets/imagens/azul.png';
             } else {
                 var icone = base_url + 'assets/imagens/rosa.png';
             }
-            var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
-            marcador(uluru, alerta.tipo, map, icone, infowindow);
+            if (a == "todas") {
+                var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
+                var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
+                marcador(uluru, alerta.tipo, map, icone, infowindow);
+            } else if (alerta.usuario.id == a) {
+                var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
+                var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
+                marcador(uluru, alerta.tipo, map, icone, infowindow);
+            }
         });
     });
     xhr.send();
@@ -55,28 +61,10 @@ function deleteMarkers() {
     clearMarkers();
     markers = [];
 }
-// Mostrando somente as alerta criadas pelo usuario logado
+// mostrando somente as alerta criadas pelo usuario logado
 function minhasAlertas(id) {
     deleteMarkers();
-    var pontos = [];
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultaalerta/");
-    xhr.addEventListener("load", function () {
-        pontos = JSON.parse(xhr.responseText);
-        pontos.forEach(function (alerta, index) {
-            if (alerta.usuario.id == id) {
-                var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
-                if (alerta.ePositivo === true) {
-                    var icone = base_url + 'assets/imagens/azul.png';
-                } else {
-                    var icone = base_url + 'assets/imagens/rosa.png';
-                }
-                var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
-                marcador(uluru, alerta.tipo, map, icone, infowindow);
-            }
-        });
-    });
-    xhr.send();
+    carregarAlertas(id);
 }
 function carregarPoliciais() {
 
@@ -100,6 +88,6 @@ function initAutocomplete() {
         zoom: 14,
         mapTypeId: 'roadmap'
     });
-    carregarAlertas();
+    carregarAlertas("todas");
     carregarPoliciais();
 }
