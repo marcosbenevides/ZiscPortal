@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
-        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <link rel="stylesheet" href="../assets/css/custom.css">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="../assets/css/animate.css">
-    </head>
-    <body style="background-color: #eee;">
+        <link rel="stylesheet" href="../assets/css/custom.css">
+    </head>	
+    <body>
         <?php
-
         function buscaCall() {
             $server = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
             $ch = curl_init();
@@ -23,15 +20,21 @@
             return $return;
         }
         ?>
-        <div class="container">
-            <div name="msg" id="msg"></div>
-            <div class="row align-items-start">
-                <div class="col-md col-lg"> 
-                    <div id="map" class="map"></div>   
-                    <input type="text" class="form-control input-lg controls animated fadeIn fixed barra-pesquisa" id="pac-input" placeholder="Pesquisa">
-                    <a class="btn btn-primary btn-lg btn-block" href="../index.html">Voltar</button></a>
-                </div>
-                <div class="col-md col-lg-7">
+        <div class="linha">
+            <div class="left animated slideInLeft">
+                <input type="text" class="form-control input-lg controls animated fadeIn" id="pac-input" placeholder="Pesquisa">
+                <div class="map" id="map"></div>
+            </div>
+            <div id="container" class="right animated slideInUp">
+                <form name="" action="" method="" autocomplete="off" class="LO">
+                    <P> </P>
+                    <div style="text-align: right;"> 
+                        <a class="btn btn-primary btn-lg" href="../index.html"> 
+                            Voltar
+                            </button> 	</a>
+                    </div>
+                    <P> </P>
+                    <h2 align="center">Dashboard</h2>
                     <div class="row" id="ligaçao" style="overflow: auto">
                         <table class="table table-sm table-hover">
                             <thead>
@@ -49,17 +52,17 @@
                                 <?php $calls = buscaCall(); ?>
                                 <?php $i = 0; ?>
                                 <?php foreach ($calls as $call) { ?>
-                                        <tr>
-                                            <th scope="row"><?php echo $i + 1 ?></th>
-                                            <td>
-                                                <font color ="#FF0000">
-                                                <b><?php echo $call->usuario->nome ?></b>
-                                                </font>
-                                            </td>
-                                            <td><?php echo $call->usuario->celular ?></td>
-                                            <td><?php echo $call->usuario->cpf ?></td>
-                                        </tr>
-                                    <?php }?>
+                                    <tr>
+                                        <th scope="row"><?php echo $i + 1 ?></th>
+                                        <td>
+                                            <font color ="#FF0000">
+                                            <b><?php echo $call->usuario->nome ?></b>
+                                            </font>
+                                        </td>
+                                        <td><?php echo $call->usuario->celular ?></td>
+                                        <td><?php echo $call->usuario->cpf ?></td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -86,9 +89,9 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </form>
             </div>
-        </div>
+        </div>		  
         <script>
             function msg(tipo, texto) {
                 var msg;
@@ -110,16 +113,12 @@
         </script>
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjjV1uvjkP2lgF1QJJV2OOY5Sj_Acfnro&libraries=places&callback=initAutocomplete"
         async defer></script>
-        <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="../assets/js/carregaPontos.js"></script>
-
     </body>
 </html>
