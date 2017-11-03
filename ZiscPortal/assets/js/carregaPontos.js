@@ -9,13 +9,13 @@ function marcador(position, title, map, icon, info) {
         icon: icon
     });
     markers.push(marker);
-    var infowindow = new google.maps.InfoWindow(), marker;
-    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-        return function () {
-            infowindow.setContent(info);
-            infowindow.open(map, marker);
-        }
-    })(marker))
+    var infowindow = new google.maps.InfoWindow({
+        content: info,
+        maxWidth: 220
+    });
+    marker.addListener('click', function () {
+        infowindow.open(map, marker);
+    });
 }
 function carregarAlertas(a) {
     var pontos = [];
@@ -24,20 +24,53 @@ function carregarAlertas(a) {
     xhr.addEventListener("load", function () {
         pontos = JSON.parse(xhr.responseText);
         pontos.forEach(function (alerta, index) {
+            var infowindow =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h3 id="thirdHeading" class="thirdHeading">INFO</h3>' +
+                    '<div id="bodyContent">' +
+                    '<p><b>' + alerta.tipo + ' (' + alerta.logHora + ')' + '</b></p></p>' +
+                    '<p> Tipo Alerta: ' + alerta.tipo + '</p>' +
+                    '<p> Data e Hora: ' + alerta.logHora + '</p>' +
+                    '<p> Ocorrência: ' + alerta.observacao + '</p>' +
+                    '</div>' +
+                    '</div>';
+            var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
             if (alerta.ePositivo === true) {
                 var icone = base_url + 'assets/imagens/azul.png';
             } else {
                 var icone = base_url + 'assets/imagens/rosa.png';
             }
             if (a == "todas") {
-                var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
-                var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
                 marcador(uluru, alerta.tipo, map, icone, infowindow);
             } else if (alerta.usuario.id == a) {
-                var uluru = {lat: Number(alerta.latitude), lng: Number(alerta.longitude)};
-                var infowindow = (alerta.usuario.nome + ': ' + alerta.observacao + ', ' + alerta.logHora)
                 marcador(uluru, alerta.tipo, map, icone, infowindow);
             }
+        });
+    });
+    xhr.send();
+}
+function carregarPoliciais() {
+    var pontospoliciais = [];
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultadpto/");
+    xhr.addEventListener("load", function () {
+        pontospoliciais = JSON.parse(xhr.responseText);
+        pontospoliciais.forEach(function (policial, index) {
+            uluru = {lat: Number(policial.latitude), lng: Number(policial.longitude)};
+            var icone = base_url + 'assets/imagens/policial.png';
+            var infowindow =
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h4 id="thirdHeading" class="thirdHeading">' + policial.nome + '</h4>' +
+                    '<div id="bodyContent">' +
+                    '<p> Endereço: ' + policial.endereco + ', ' + policial.numero + ', ' + policial.bairro + '. ' + policial.cidade + '</p>' +
+                    '<p> Site: ' + policial.site + '</p>' +
+                    '</div>' +
+                    '</div>';
+            marcador(uluru, policial.nome, map, icone, infowindow);
         });
     });
     xhr.send();
@@ -66,32 +99,18 @@ function minhasAlertas(id) {
     deleteMarkers();
     carregarAlertas(id);
 }
-function todasAlertas(){
-	deleteMarkers();
-	carregarAlertas("todas");
-	carregarPoliciais();
-}
-function carregarPoliciais() {
-
-    var pontospoliciais = [];
-    var xhr1 = new XMLHttpRequest();
-    xhr1.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultadpto/");
-    xhr1.addEventListener("load", function () {
-        pontospoliciais = JSON.parse(xhr1.responseText);
-        pontospoliciais.forEach(function (policial, index) {
-            uluru = {lat: Number(policial.latitude), lng: Number(policial.longitude)};
-            var icone = base_url + 'assets/imagens/policial.png';
-            var infowindow = (policial.nome + ': ' + policial.bairro + ', ' + policial.cidade + '.' + policial.site)
-            marcador(uluru, policial.nome, map, icone, infowindow);
-        });
-    });
-    xhr1.send();
+function todasAlertas() {
+    deleteMarkers();
+    carregarAlertas("todas");
+    carregarPoliciais();
+    //var markerCluster = new MarkerClusterer(map, markers,
+    // {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -19.921390, lng: -43.954558},
-        zoom: 14,
-        mapTypeId: 'roadmap'
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     todasAlertas();
 }
