@@ -1,6 +1,14 @@
 var base_url = 'http://localhost/ZiscPortal/';
 var map;
 var markers = [];
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 function marcador(position, title, map, icon, info) {
     var marker = new google.maps.Marker({
         position: position,
@@ -40,7 +48,7 @@ function carregarAlertas(a) {
             if (alerta.ePositivo === true) {
                 var icone = base_url + 'assets/imagens/azul.png';
             } else {
-                var icone = base_url + 'assets/imagens/rosa.png';
+                var icone = '';
             }
             if (a == "todas") {
                 marcador(uluru, alerta.tipo, map, icone, infowindow);
@@ -59,7 +67,7 @@ function carregarPoliciais() {
         pontospoliciais = JSON.parse(xhr.responseText);
         pontospoliciais.forEach(function (policial, index) {
             uluru = {lat: Number(policial.latitude), lng: Number(policial.longitude)};
-            var icone = base_url + 'assets/imagens/policial.png';
+            var icone = base_url + 'assets/imagens/police(2).png';
             var infowindow =
                     '<div id="content">' +
                     '<div id="siteNotice">' +
@@ -74,6 +82,26 @@ function carregarPoliciais() {
         });
     });
     xhr.send();
+}
+function ligacaoAtiva(posicao) {
+    deleteMarkers();
+	for(var i=0; i <posicao.length;i++){
+		console.log(posicao[i]);
+		uluru = {lat: Number(posicao[i].latitude), lng: Number(posicao[i].longitude)};
+		console.log(uluru);
+        var icone = '';
+		var infowindow = 
+                    '<div id="content">' +
+                    '<div id="siteNotice">' +
+                    '</div>' +
+                    '<h4 id="thirdHeading" class="thirdHeading">' + posicao[i].usuario + '</h4>' +
+                    '<div id="bodyContent">' +
+                    '<p> CPF: ' + posicao[i].cpf + '</p>' +
+                    '<p> TEL: ' + posicao[i].telefone + '</p>' +
+                    '</div>' +
+                    '</div>';;
+		marcador(uluru, posicao[i].usuario, map, icone, infowindow);
+	}
 }
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
@@ -109,8 +137,7 @@ function todasAlertas() {
 function initAutocomplete() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -19.921390, lng: -43.954558},
-        zoom: 13,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    todasAlertas();
-}
+ }
