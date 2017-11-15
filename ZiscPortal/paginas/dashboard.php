@@ -18,106 +18,60 @@
             async defer>
     </script>
     <script src="../assets/js/carregaPontos.js"></script>
-    <body style="background-color: #F7F7F7;">
-        <?php
-
-        function buscaCall() {
-            $server = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $server);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $return = json_decode(curl_exec($ch));
-            curl_close($ch);
-            return $return;
-        }
-        ?>
-        <h4 align="center">DASHBOARD - ZISC</h4> 
-        <nav class="navbar navbar-light">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="pull-left"> 
-                        <img src="../logo_zisc.jpg" width="50" height="50" class="d-inline-block align-top" alt="">              
-                    </a>
-                </div>
-                <a class="navbar-brand">  (Usuário)   </a>
-                <ul class="nav navbar-nav navbar-right">
-                    <a href="../index.html"  style="text-align: right;"> 
-                        Voltar
-                    </a>
-                </ul>
-            </div>
-        </nav>
-        <div class="left animated slideInLeft">
+    <body>
+        <div class="left1 animated slideInLeft">
             <div class="map" id="map"></div>
         </div>
-        <form class="form-inline">
-            <br/>
-            <h3 align="center">Ligações Ativas</h3> 
+        <div id="linha" class="right1 animated slideInUp">
+
+            <img src="../logo_marker.png" id="logo" width="70" height="100" />
+            <h3 align="center" class="h3">Ligações Ativas</h3> 
+
             <div class="row" id="ligaçao" style="overflow: auto">
-                <table class="table table-responsive-sm table-hover ">
+                <table id="tabela-ligacoes" class="table table-responsive-sm table-hover ">
                     <thead>
                         <tr>
-                    <h4></h4>
-                    </tr>
-                    <tr>
-                        <th>#</th>
-                        <th>Usuário</th>
-                        <th>Telefone</th>
-                        <th>CPF</th>
-                    </tr>
-                    </thead>
+                            <th>Usuário</th>
+                            <th>Telefone</th>
+                            <th>CPF</th>
+                        </tr>
                     <tbody>
-                        <?php $calls = buscaCall(); ?>
-                        <?php $i = 0; ?>
-                        <?php foreach ($calls as $call) { ?>
-                            <tr>
-                                <th scope="row"><?php echo $i + 1 ?></th>
-                                <td>
-                                    <font color ="#FF0000">
-                                    <b><?php echo $call->usuario->nome ?></b>
-                                    </font>
-                                </td>
-                                <td><?php echo $call->usuario->celular ?></td>
-                                <td><?php echo $call->usuario->cpf ?></td>
-                            </tr>
-                        <?php } ?>
                     </tbody>
+                    </thead>
                 </table>
             </div>
-        </form>
-  <script>
-                function msg(tipo, texto) {
-                    var msg;
-                    if (tipo == 'success') {
-                        msg = '<div class="alert alert-success alert-dismissible">' +
-                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
-                                '<h4> <i class="icon fa fa-check"> </i>Sucesso!</h4>'
-                                + texto +
-                                '</div>';
-                    } else {
-                        msg = '<div class="alert alert-danger alert-dismissible">' +
-                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
-                                '<h4><i class="icon fa fa-ban"></i> Erro!</h4>'
-                                + texto +
-                                '</div>';
-                    }
-                    $('.msg').html(msg);
-                }
-        </script>
+        </div>
         <script>
-            var posicao = [];
-            var i = 0;
-<?php foreach ($calls as $call) { ?>
-                var latitude, longitude, usuario, cpf, telefone;
-                latitude = '<?php echo $call->latitude ?>';
-                longitude = '<?php echo $call->longitude ?>';
-                usuario = '<?php echo $call->usuario->nome ?>';
-                cpf = '<?php echo $call->usuario->cpf ?>';
-                telefone = '<?php echo $call->usuario->celular ?>';
-                posicao[i] = {latitude, longitude, usuario, cpf, telefone};
-                i++;
-<?php } ?>
-            ligacaoAtiva(posicao);
+                var ligacoes;
+
+                $(document).ready(function () {
+                    tabela();
+                    //console.log(ligacoes);
+                });
+
+                function tabela() {
+                    var url = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
+                    var linhas = "";
+                    $.get(url, function (data) {
+                        ligacoes = data;
+                        if ($('#tabela-ligacoes tbody') === 0) {
+                            $('#tabela-ligacoes').append("<tbody></tbody>");
+                        }
+                        ligacoes.forEach(function (ligacao, index) {
+                            linhas += '<tr data-id="' + index + '">' +
+                                    '<td>' + ligacao.usuario.nome + '</td>' +
+                                    '<td>' + ligacao.usuario.celular + '</td>' +
+                                    '<td>' + ligacao.usuario.cpf + '</td>' +
+                                    '</tr>';
+                        });
+                        $('#tabela-ligacoes tbody').append(linhas);
+                    }, 'json');
+                }
+                $('#tabela-ligacoes').on('click', 'tr', function () {
+                    var linha = $(this).data('id');
+                    
+                });
+
         </script>
     </body>
 </html>
