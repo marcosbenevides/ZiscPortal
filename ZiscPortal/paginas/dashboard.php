@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../assets/css/animate.css">
         <link rel="stylesheet" href="../assets/css/custom.css">
     </head>	
+
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
@@ -15,11 +16,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjjV1uvjkP2lgF1QJJV2OOY5Sj_Acfnro&libraries=places&callback=initAutocomplete"
-            async defer>
-    </script>
+    async defer></script>
     <script src="../assets/js/carregaPontos.js"></script>
+
     <body>
         <div class="left1 animated slideInLeft">
+            <input type="text" class="form-control input-lg controls animated fadeIn" id="pac-input" placeholder="Pesquisa">
             <div class="map" id="map"></div>
         </div>
         <div id="linha" class="right1 animated slideInUp">
@@ -42,36 +44,33 @@
             </div>
         </div>
         <script>
-                var ligacoes;
-
-                $(document).ready(function () {
-                    tabela();
-                    //console.log(ligacoes);
-                });
-
-                function tabela() {
-                    var url = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
-                    var linhas = "";
-                    $.get(url, function (data) {
-                        ligacoes = data;
-                        if ($('#tabela-ligacoes tbody') === 0) {
-                            $('#tabela-ligacoes').append("<tbody></tbody>");
-                        }
-                        ligacoes.forEach(function (ligacao, index) {
-                            linhas += '<tr data-id="' + index + '">' +
-                                    '<td>' + ligacao.usuario.nome + '</td>' +
-                                    '<td>' + ligacao.usuario.celular + '</td>' +
-                                    '<td>' + ligacao.usuario.cpf + '</td>' +
-                                    '</tr>';
-                        });
-                        $('#tabela-ligacoes tbody').append(linhas);
-                    }, 'json');
-                }
-                $('#tabela-ligacoes').on('click', 'tr', function () {
-                    var linha = $(this).data('id');
-                    
-                });
-
+            var ligacoes;
+            $(document).ready(function () {
+                tabela();
+                //console.log(ligacoes);
+            });
+            function tabela() {
+                var url = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
+                var linhas = "";
+                $.get(url, function (data) {
+                    ligacoes = data;
+                    if ($('#tabela-ligacoes tbody') === 0) {
+                        $('#tabela-ligacoes').append("<tbody></tbody>");
+                    }
+                    ligacoes.forEach(function (ligacao, index) {
+                        linhas += '<tr data-id="' + index + '">' +
+                                '<td>' + ligacao.usuario.nome + '</td>' +
+                                '<td>' + ligacao.usuario.celular + '</td>' +
+                                '<td>' + ligacao.usuario.cpf + '</td>' +
+                                '</tr>';
+                    });
+                    $('#tabela-ligacoes tbody').append(linhas);
+                }, 'json');
+            }
+            $('#tabela-ligacoes').on('click', 'tr', function () {
+                var linha = $(this).data('id');
+                ligacaoAtiva(ligacoes[linha]);
+            });
         </script>
     </body>
 </html>
