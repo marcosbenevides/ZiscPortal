@@ -15,7 +15,7 @@ function login() {
                     "<a data-toggle='tab' href='#cadastro'onclick='todasAlertas()'>Cadastro</a>" +
                     "</li>" +
                     "<li>" +
-                    "<a data-toggle='tab' href='#alertas' onclick='minhasAlertas(" + objeto.id + ")' >Histórico de Alertas</a>" +
+                    "<a data-toggle='tab' href='#alertas' onclick='minhaAlerta(" + objeto.id + ")' >Histórico de Alertas</a>" +
                     "</li>" +
                     "<li>" +
                     "<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.html'>DashBoard</a>" +
@@ -24,19 +24,33 @@ function login() {
                     "<div class='tab-content'>" +
                     "<div id='cadastro' class='tab-pane fade in active'>" +
                     "<h3><center>Meu Cadastro</center></h3>" +
-                    "<img width='40%' height='30%'  src='assets/imagens/semfoto2.png' alt='' title='Imagem do Usuário' vspace='10%' hspace='15%' border='10%' align='center'/>" +
-                    "<p><label id='nome'>Nome: </label>" + " " + objeto['nome'] +
+                    "<img id='logo' width='160' height='160' src='assets/imagens/user.png' align='center'/>" +
+                    "</br>" +
+                    "<p><label id='nome'> &nbsp; Nome: </label>" + " " + objeto['nome'] +
                     "</p>" +
-                    "<p><label id='telefone'>Telefone: </label>" + " " + objeto['celular'] +
+                    "<p><label id='telefone'> &nbsp; Telefone: </label>" + " " + objeto['celular'] +
                     "</p>" +
-                    "<p><label id='email'>E-mail: </label>" + " " + objeto['email'] +
+                    "<p><label id='email'> &nbsp; E-mail: </label>" + " " + objeto['email'] +
                     "</p>" +
-                    "<p><label id='cpf'>CPF: </label>" + " " + objeto['cpf'] +
+                    "<p><label id='cpf'> &nbsp; CPF: </label>" + " " + objeto['cpf'] +
                     "</p>" +
                     "</div>" +
                     "<div id='alertas' class='tab-pane fade'>" +
-                    "<h3>Histórico de Alertas</h3>" +
-                    "<p><label id='email'>Email: </label>" + objeto['email'] + "</p>" +
+                    "<h3><center>Histórico de Alertas</center></h3>" +
+                    "<p><label id='email'> &nbsp; Email: </label>" + objeto['email'] + "</p>" +
+                    "<div class='row' id='ligaçao' style='overflow: auto'> " +
+                    " <table id='tabela-minhasA' class='table table-responsive-sm table-hover '>" +
+                    " <thead> " +
+                    " <tr> " +
+                    " <th>Data/Hora</th> " +
+                    " <th>Tipo</th> " +
+                    " <th>Observação</th> " +
+                    " </tr> " +
+                    " <tbody> " +
+                    " </tbody> " +
+                    " </thead> " +
+                    " </table> " +
+                    " </div> " +
                     "</div>" +
                     "</div>" +
                     "</div>"
@@ -55,4 +69,9 @@ function login() {
     };
     //$('#linha').load('paginas/status-page.php');
     xhr.send("email=" + email + "&password=" + senha);
+
+
+
 }
+
+

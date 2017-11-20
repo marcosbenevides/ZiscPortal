@@ -121,9 +121,57 @@ function deleteMarkers() {
     markers = [];
 }
 // mostrando somente as alerta criadas pelo usuario logado
-function minhasAlertas(id) {
+function minhaAlerta(id) {
     deleteMarkers();
-    carregarAlertas(id);
+    var minhaAlerta, mAlerta;
+    $(document).ready(function () {
+        tabela();
+        //console.log(ligacoes);
+    });
+    var url = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultaalerta/";
+    var linhas = "";
+    $.get(url, function (data) {
+        minhaAlerta = data;
+        if ($('#tabela-minhasA tbody') === 0) {
+            $('#tabela-minhasA').append("<tbody></tbody>");
+        }
+
+        minhaAlerta.forEach(function (alerta, index) {
+        if (id === alerta.usuario.id) {
+        linhas += '<tr data-id="' + index + '">' +
+                '<td>' + alerta.logHora + '</td>' +
+                '<td>' + alerta.tipo + '</td>' +
+                '<td>' + alerta.observacao + '</td>' +
+                '</tr>';
+         }
+         });
+        $('#tabela-minhasA tbody').append(linhas);
+    }, 'json');
+    $('#tabela-minhasA').on('click', 'tr', function () {
+        var linha = $(this).data('id');
+        console.log(linha);
+               console.log(minhaAlerta[linha]);
+    
+        var infowindow =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h3 id="thirdHeading" class="thirdHeading">INFO</h3>' +
+                '<div id="bodyContent">' +
+                '<p><b>' + minhaAlerta[linha].tipo + ' (' + minhaAlerta[linha].logHora + ')' + '</b></p></p>' +
+                '<p> Tipo Alerta: ' + minhaAlerta[linha].tipo + '</p>' +
+                '<p> Data e Hora: ' + minhaAlerta[linha].logHora + '</p>' +
+                '<p> Ocorrência: ' + minhaAlerta[linha].observacao + '</p>' +
+                '</div>' +
+                '</div>';
+        var uluru = {lat: Number(minhaAlerta[linha].latitude), lng: Number(minhaAlerta[linha].longitude)};
+        if (minhaAlerta[linha].ePositivo === true) {
+            var icone = base_url + 'assets/imagens/azul.png';
+        } else {
+            var icone = '';
+        }
+        marcador(uluru, minhaAlerta[linha], map, icone, infowindow);
+    });
 }
 function todasAlertas() {
     deleteMarkers();
