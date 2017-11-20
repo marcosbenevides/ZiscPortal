@@ -29,13 +29,40 @@ input.controls{
 .left1{
     float: left;
     width: 60%;
-    height: 100%;
+    /*    height: 70%;*/
+}
+.above{
+    float: left;
+    height: 79%;  
+}
+.low{
+    float: left;
+    /*    width: 60%;*/
+    height: 21%;  
 }
 .right1{
     float: right;
     width: 40%;
     height: 100%;
     background-color: #ececec;
+}
+.map1{
+    width: 100%;
+    height: 70% !important;
+}
+
+.lista{
+    padding: 5px 7px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    background-color: #ececec !important;
+    font-size: 12px !important;
+}
+.listat{
+    padding: 6px 8px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    
 }
 .map{
     width: 100%;
@@ -52,6 +79,7 @@ input.controls{
 .mb-10{
     margin-bottom: 10px !important;
 }
+
 #map {
     height: 660px !important;
     width: 100% !important;

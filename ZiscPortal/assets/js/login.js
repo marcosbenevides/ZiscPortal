@@ -18,7 +18,7 @@ function login() {
                     "<a data-toggle='tab' href='#alertas' onclick='minhasAlertas(" + objeto.id + ")' >Histórico de Alertas</a>" +
                     "</li>" +
                     "<li>" +
-                    "<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.php'>DashBoard</a>" +
+                    "<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.html'>DashBoard</a>" +
                     "</li>" +
                     "</ul>" +
                     "<div class='tab-content'>" +

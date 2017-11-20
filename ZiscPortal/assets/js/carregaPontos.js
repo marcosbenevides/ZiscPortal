@@ -94,7 +94,7 @@ function ligacaoAtiva(posicao) {
             '<h4 id="thirdHeading" class="thirdHeading">' + posicao.usuario.nome + '</h4>' +
             '<div id="bodyContent">' +
             '<p> CPF: ' + posicao.usuario.cpf + '</p>' +
-            '<p> TEL: ' + posicao.usuario.telefone + '</p>' +
+            '<p> TEL: ' + posicao.usuario.celular + '</p>' +
             '</div>' +
             '</div>';
     ;
