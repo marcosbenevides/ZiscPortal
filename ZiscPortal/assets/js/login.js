@@ -9,55 +9,9 @@ function login() {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             objeto = JSON.parse(xhr.responseText);
-            document.getElementById('linha').innerHTML = "<div class='sessao'>" +
-                    "<ul class='nav nav-tabs'>" +
-                    "<li class='active'>" +
-                    "<a data-toggle='tab' href='#cadastro'onclick='todasAlertas()'>Cadastro</a>" +
-                    "</li>" +
-                    "<li>" +
-                    "<a data-toggle='tab' href='#alertas' onclick='minhaAlerta(" + objeto.id + ")' >Histórico de Alertas</a>" +
-                    "</li>" +
-                    "<li>" +
-                    "<a class ='btn btn-primary btn-block btn-lg mb-10' href='paginas/dashboard.html'>DashBoard</a>" +
-                    "</li>" +
-                    "</ul>" +
-                    "<div class='tab-content'>" +
-                    "<div id='cadastro' class='tab-pane fade in active'>" +
-                    "<h3><center>Meu Cadastro</center></h3>" +
-                    "<img id='logo' width='160' height='160' src='assets/imagens/user.png' align='center'/>" +
-                    "</br>" +
-                    "<p><label id='nome'> &nbsp; Nome: </label>" + " " + objeto['nome'] +
-                    "</p>" +
-                    "<p><label id='telefone'> &nbsp; Telefone: </label>" + " " + objeto['celular'] +
-                    "</p>" +
-                    "<p><label id='email'> &nbsp; E-mail: </label>" + " " + objeto['email'] +
-                    "</p>" +
-                    "<p><label id='cpf'> &nbsp; CPF: </label>" + " " + objeto['cpf'] +
-                    "</p>" +
-                    "</div>" +
-                    "<div id='alertas' class='tab-pane fade'>" +
-                    "<h3><center>Histórico de Alertas</center></h3>" +
-                    "<p><label id='email'> &nbsp; Email: </label>" + objeto['email'] + "</p>" +
-                    "<div class='row' id='ligaçao' style='overflow: auto'> " +
-                    " <table id='tabela-minhasA' class='table table-responsive-sm table-hover '>" +
-                    " <thead> " +
-                    " <tr> " +
-                    " <th>Data/Hora</th> " +
-                    " <th>Tipo</th> " +
-                    " <th>Observação</th> " +
-                    " </tr> " +
-                    " <tbody> " +
-                    " </tbody> " +
-                    " </thead> " +
-                    " </table> " +
-                    " </div> " +
-                    "</div>" +
-                    "</div>" +
-                    "</div>"
-
-            //---------------------------------------
-
-
+            Cookies.set('User', JSON.stringify(objeto));
+            document.getElementById('linha').innerHTML =
+                    "<meta http-equiv='refresh' content='5; url=/ZiscPortal/ZiscPortal/paginas/home.html'>"
             //var request = $.ajax({
             //  type: 'POST',
             //data: {rel: objeto},
