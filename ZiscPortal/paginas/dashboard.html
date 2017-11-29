@@ -23,7 +23,7 @@
             <div class="map1" id="map"></div>
         </div>
         <div id="linha" class="right1 animated slideInUp">
-            
+
             <div class="barra"> <a href="../paginas/home.html">Voltar</a></div>
             <img src="../logo_marker.png" id="logo" width="70" height="100" /> 
             <h3 align="center" class="h3">Ligações Ativas</h3> 
@@ -62,12 +62,14 @@
         </div>
         <script>
             var ligacoes;
+            var servidor1 = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com";
+            var servidor2 = "http://192.168.43.202:8080/ZiscWS";
             $(document).ready(function () {
                 tabela();
                 //console.log(ligacoes);
             });
             function tabela() {
-                var url = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/callhandler/";
+                var url = servidor1 + "/res/callhandler/";
                 var linhas = "";
                 $.get(url, function (data) {
                     ligacoes = data;

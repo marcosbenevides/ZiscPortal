@@ -1,3 +1,5 @@
+var servidor1 = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com";
+var servidor2 = "http://192.168.43.202:8080/ZiscWS";
 var base_url = 'http://localhost/ZiscPortal/ZiscPortal/';
 var map;
 var markers = [];
@@ -28,7 +30,7 @@ function marcador(position, title, map, icon, info) {
 function carregarAlertas(a) {
     var pontos = [];
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultaalerta/");
+    xhr.open("GET", servidor1 + "/res/consultaalerta/");
     xhr.addEventListener("load", function () {
         pontos = JSON.parse(xhr.responseText);
         pontos.forEach(function (alerta, index) {
@@ -59,32 +61,32 @@ function carregarAlertas(a) {
     });
     xhr.send();
 }
-function carregarMinhaAlerta(minhaAlerta){
-          deleteMarkers();
-            var infowindow =
-                '<div id="content">' +
-                '<div id="siteNotice">' +
-                '</div>' +
-                '<h3 id="thirdHeading" class="thirdHeading">INFO</h3>' +
-                '<div id="bodyContent">' +
-                '<p><b>' + minhaAlerta.tipo + ' (' + minhaAlerta.logHora + ')' + '</b></p></p>' +
-                '<p> Tipo Alerta: ' + minhaAlerta.tipo + '</p>' +
-                '<p> Data e Hora: ' + minhaAlerta.logHora + '</p>' +
-                '<p> Ocorrência: ' + minhaAlerta.observacao + '</p>' +
-                '</div>' +
-                '</div>';
-        var uluru = {lat: Number(minhaAlerta.latitude), lng: Number(minhaAlerta.longitude)};
-        if (minhaAlerta.ePositivo === true) {
-            var icone = base_url + 'assets/imagens/azul.png';
-        } else {
-            var icone = '';
-        }
-        marcador(uluru, minhaAlerta.tipo, map, icone, infowindow);
- }
+function carregarMinhaAlerta(minhaAlerta) {
+    deleteMarkers();
+    var infowindow =
+            '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h3 id="thirdHeading" class="thirdHeading">INFO</h3>' +
+            '<div id="bodyContent">' +
+            '<p><b>' + minhaAlerta.tipo + ' (' + minhaAlerta.logHora + ')' + '</b></p></p>' +
+            '<p> Tipo Alerta: ' + minhaAlerta.tipo + '</p>' +
+            '<p> Data e Hora: ' + minhaAlerta.logHora + '</p>' +
+            '<p> Ocorrência: ' + minhaAlerta.observacao + '</p>' +
+            '</div>' +
+            '</div>';
+    var uluru = {lat: Number(minhaAlerta.latitude), lng: Number(minhaAlerta.longitude)};
+    if (minhaAlerta.ePositivo === true) {
+        var icone = base_url + 'assets/imagens/azul.png';
+    } else {
+        var icone = '';
+    }
+    marcador(uluru, minhaAlerta.tipo, map, icone, infowindow);
+}
 function carregarPoliciais() {
     var pontospoliciais = [];
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/consultadpto/");
+    xhr.open("GET", servidor1 + "/res/consultadpto/");
     xhr.addEventListener("load", function () {
         pontospoliciais = JSON.parse(xhr.responseText);
         pontospoliciais.forEach(function (policial, index) {

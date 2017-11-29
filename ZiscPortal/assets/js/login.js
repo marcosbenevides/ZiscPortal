@@ -1,5 +1,7 @@
+var servidor1 = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com";
+var servidor2 = "http://192.168.43.202:8080/ZiscWS";
 function login() {
-    const URL = "http://zisc-env.j8phxubfpq.us-east-2.elasticbeanstalk.com/res/login";
+    const URL = servidor1 + "/res/login";
     var email = btoa(document.getElementById("email").value);
     var senha = btoa(document.getElementById("senha").value);
     var objeto = [];
